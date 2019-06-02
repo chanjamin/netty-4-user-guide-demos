@@ -13,6 +13,7 @@ public class TimeServerHandler extends ChannelInboundHandlerAdapter {
         final ByteBuf time = ctx.alloc().buffer(4); // (2)
         time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
 
+        // ChannelFuture 代表了一个还没有发生的 I/O 操作,如果这个f == Listener的future，写请求完成
         final ChannelFuture f = ctx.writeAndFlush(time); // (3)
         f.addListener(new ChannelFutureListener() {
             @Override
